@@ -1,0 +1,312 @@
+<!DOCTYPE html >
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wonogiri Agenda</title>
+	      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+	      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+	<!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles2.css" rel="stylesheet" />
+
+        <script src="fb/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-database.js"></script>
+        <script src="js/jquery-3.2.1.slim.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="fonts/font-awesome.min.css" >
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+	</head>
+
+    <body onload="tampilData()" id="page-top">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#page-top">Wonogiri Agenda</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#services"></a></li>
+                        <li class="nav-item"><a id = "user" class="nav-link" href="#portfolio"></a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="logout()" href="#contact">LogOut</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+		<header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h1 class="text-white font-weight-bold">Welcome To Wonda Apps ^_^</h1>
+                        <hr class="divider" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">Di Website Ini Akan Menujukan Seluruh Agenda Yang Akan Di Lakukan Oleh Pemerintah Daerah Wonogiri</p>
+                        <a class="btn btn-primary btn-xl" href="#about">Check Agenda</a>
+                    </div>
+                </div>
+            </div>
+        	</header>
+<section class="page-section bg-dark" id="about">
+          <div class="container mt-3">
+		<div class="container px-4 px-lg-5">
+			            <div class="container px-4 px-lg-5">
+                	<div class="row gx-4 gx-lg-5 justify-content-center">
+
+ 					<h2 class="text-white mt-0"><center>Agenda Yang Tersedia</center><hr class="divider divider-light" /></h2>
+                     <div class="col align-self-center" style="padding:12px;"><input id="text_cari" type="text" placeholder="Cari berdasarkan nama acara" class="form-control" style="padding:6px;" /></div>
+                     <div class="col-auto align-self-center" style="padding:6px;"><button class="btn btn-primary btn-xl" type="button" onclick="CariData()"><img src="drawable/cari.png" width="20sp" height="20sp"></button></div>
+                     <div class="col-auto align-self-center" style="padding:6px;"><button class="btn btn-primary btn-xl" type="button" onclick="SortData()"><img src="drawable/sort.png" width="20sp" height="20sp"></button></div>
+          <table id="tabel-status-alat" class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Acara</th>
+                <th scope="col">PJ</th>
+                <th scope="col">Tanggal</th>
+                <th scope="col">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+          </table>
+          </div>
+	</section>
+
+<script>
+    // Initialize Firebase
+	var config = {
+	    apiKey: "AIzaSyAH5jc1sc2umz7MPf-JVac_vUt4J34-vo8",
+		authDomain: "magang-akprind.firebaseapp.com",
+		databaseURL: "https://magang-akprind-default-rtdb.asia-southeast1.firebasedatabase.app",
+		projectId: "magang-akprind",
+		storageBucket: "magang-akprind.appspot.com",
+		messagingSenderId: "446318643608"
+	};
+	firebase.initializeApp(config);
+	
+// Menampilkan data dalam bentuk tabel
+	function tampilData()
+	{
+
+	// Buat referensi database firebase
+		var dbRef = firebase.database();
+		var statusAlat = dbRef.ref("agenda");
+
+	// Dapatkan referensi table
+		var table = document.getElementById("tabel-status-alat").getElementsByTagName('tbody')[0];
+
+	// Membuang semua isi table	
+		$("#tabel-status-alat").find("tr:gt(0)").remove();
+
+	// Memuat Data
+		statusAlat.on("child_added", function(data, prevChildKey) {
+		   	var newstatusAlat = data.val();
+
+		   	var row = table.insertRow(table.rows.length);
+
+		   	var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+
+		   	cell1.innerHTML = newstatusAlat.acara;
+            cell2.innerHTML = newstatusAlat.penanggungjawab;
+            cell3.innerHTML = newstatusAlat.tanggal;
+			cell4.innerHTML = '<button class="btn btn-success btn-sm" type="button" id="detail_data" onclick="detailData_Tampil(' + newstatusAlat.key + ')" data-toggle="modal" data-target="#ModalDetail"><img src="drawable/detail.png" width="20sp" height="20sp"></button>'; 
+		});
+
+	}
+
+// Melakukan proses pencarian data
+	function CariData()
+	{
+	// Ambil isi text pencarian
+		var nama_alat_cari = $('#text_cari').val();
+
+	// Buat referensi database firebase
+		var dbRef = firebase.database();
+		var statusAlat = dbRef.ref("agenda");
+
+
+		// Ambil data nama_alat sama persis isi text cari
+		// var query = statusAlat
+		// 				.orderByChild('nama_alat')
+		// 				.equalTo(nama_alat_cari)
+		// 				.limitToFirst(1);
+
+
+		// Ambil data nama_alat huruf depan (dan selebihnya) isi text cari dilimit 1 data saja
+		// var query = statusAlat
+		// 				.orderByChild('nama_alat')
+		// 				.startAt(nama_alat_cari)
+		// 				.endAt(nama_alat_cari + "\uf8ff")
+		// 				.limitToFirst(1);
+
+
+		// Ambil data nama_alat huruf depan (dan selebihnya) isi text cari
+		var query = statusAlat
+						.orderByChild('acara')
+						.startAt(nama_alat_cari)
+						.endAt(nama_alat_cari + "\uf8ff");
+	
+
+	// Dapatkan referensi table
+		var table = document.getElementById("tabel-status-alat").getElementsByTagName('tbody')[0];
+
+	// Membuang semua isi table	
+		$("#tabel-status-alat").find("tr:gt(0)").remove();
+
+		// Memuat Data pencarian
+
+		query.on("child_added", function(snapshot) {
+
+			var childData = snapshot.val();
+			console.log(childData);
+			  	
+			var row = table.insertRow(table.rows.length);
+
+		   	var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+ 
+		   	cell1.innerHTML = childData.acara;
+            cell2.innerHTML = childData.penanggungjawab;
+            cell3.innerHTML = childData.tanggal; 
+			cell4.innerHTML = '<button class="btn btn-success btn-sm" type="button" id="detail_data" onclick="detailData_Tampil(' + childData.key + ')" data-toggle="modal" data-target="#ModalDetail"><img src="drawable/detail.png" width="20sp" height="20sp"></button>'; 
+		});
+
+	}
+
+    function SortData(){
+    var short_tgl = $('#text_cari').val();
+    var dbRef = firebase.database();
+    var Agenda_tgl = dbRef.ref("agenda");
+                 
+    var query = Agenda_tgl
+        .orderByChild('tanggal')
+        .equalTo(short_tgl)
+        .limitToFirst(1);
+                               
+    var query = Agenda_tgl
+        .orderByChild('tanggal')
+        .startAt(short_tgl)
+        .endAt(short_tgl + "\uf8ff")
+        .limitToFirst(1);
+                        
+    var query = Agenda_tgl
+        .orderByChild('tanggal')
+        .startAt(short_tgl)
+        .endAt(short_tgl + "\uf8ff");
+                               
+    var table = document.getElementById("tabel-status-alat").getElementsByTagName('tbody')[0];
+    $("#tabel-status-alat").find("tr:gt(0)").remove();
+    query.on("child_added", function(snapshot) {
+        var childData = snapshot.val();
+        console.log(childData);
+        var row = table.insertRow(table.rows.length);
+        var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		var cell4 = row.insertCell(3);
+ 
+		cell1.innerHTML = childData.acara;
+        cell2.innerHTML = childData.penanggungjawab;
+        cell3.innerHTML = childData.tanggal; 
+		cell4.innerHTML = '<button class="btn btn-success btn-sm" type="button" id="detail_data" onclick="detailData_Tampil(' + childData.key + ')" data-toggle="modal" data-target="#ModalDetail"><img src="drawable/detail.png" width="20sp" height="20sp"></button>';
+    });
+}
+
+// Menampilkan detail data
+function detailData_Tampil(key)
+	{
+		$('#T4_detail').val(key);
+		
+		var dbRef_detail_tampil = firebase.database();
+		var statusAlatdenganID = dbRef_detail_tampil.ref("agenda/" + key);
+
+		statusAlatdenganID.on("value", function(snapshot) {
+			  	var childData = snapshot.val();
+			  	$('#t4_acara_detail').val(childData.acara);
+			  	$('#t4_penanggungjawab_detail').val(childData.penanggungjawab);
+			  	$('#t4_tanggal_detail').val(childData.tanggal);
+			  	$('#t4_tempat_detail').val(childData.tempat);
+				$('#t4_waktu_mulai_detail').val(childData.waktu_mulai);
+				$('#t4_waktu_berakhir_detail').val(childData.waktu_berakhir);
+		});
+
+	}
+
+
+function logout() {
+    firebase.auth().signOut();
+    location.replace("index.html");
+}
+
+</script>
+
+<!-- Modal Detail -->
+<div class="modal fade" id="ModalDetail" tabindex="-1" role="dialog" aria-labelledby="ModalDetailLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalUpdateLabel">Detail Data</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h6>ID : </h6>
+          <input class="form-control" type="text" id="T4_detail">
+          <h6>Acara : </h6>
+          <input class="form-control" type="text" id="t4_acara_detail">
+          <h6>Penanggungjawab : </h6>
+          <input class="form-control" type="text" id="t4_penanggungjawab_detail">
+          <h6>Tanggal : </h6>
+          <input class="form-control" type="text" id="t4_tanggal_detail">
+          <h6>Tempat : </h6>
+          <input class="form-control" type="text" id="t4_tempat_detail">
+          <h6>Waktu Mulai : </h6>
+          <input class="form-control" type="text" id="t4_waktu_mulai_detail">
+          <h6>Waktu Berakhir : </h6>
+          <input class="form-control" type="text" id="t4_waktu_berakhir_detail">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+		<footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2021 - Wonogiri Agenda</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+
+</html>
